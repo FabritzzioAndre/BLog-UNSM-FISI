@@ -167,6 +167,29 @@ function inyectarModalAuth() {
   });
 }
 
+/* Abre el modal de autenticación en el modo deseado (registro o inicio de sesión) */
+function configurarModalAuth(esRegistro) {
+  const registro = document.getElementById('authRegistro');
+  if (!registro) return;
+  const nombreWrap = document.getElementById('authNombreWrap');
+  const titulo = document.getElementById('authTitulo');
+  const boton = document.getElementById('authBoton');
+  registro.checked = !!esRegistro;
+  nombreWrap.classList.toggle('d-none', !esRegistro);
+  titulo.textContent = esRegistro ? 'Crear cuenta' : 'Iniciar sesión';
+  boton.textContent = esRegistro ? 'Registrarse' : 'Iniciar sesión';
+}
+
+function abrirModalRegistro() {
+  configurarModalAuth(true);
+  bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAuth')).show();
+}
+
+function abrirModalSesion() {
+  configurarModalAuth(false);
+  bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAuth')).show();
+}
+
 /* Renders el estado de sesión dentro de #nav-session */
 async function renderNavSesion() {
   const cont = document.getElementById('nav-session');
@@ -175,7 +198,10 @@ async function renderNavSesion() {
 
   if (!sesion) {
     cont.innerHTML = `
-      <button class="btn btn-unsm btn-sm px-3" data-bs-toggle="modal" data-bs-target="#modalAuth">
+      <button class="btn btn-outline-unsm btn-sm px-3" onclick="abrirModalRegistro()">
+        <i class="bi bi-person-plus me-1"></i>Registrarse
+      </button>
+      <button class="btn btn-unsm btn-sm px-3" onclick="abrirModalSesion()">
         <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar sesión
       </button>`;
     return;

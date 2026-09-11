@@ -271,7 +271,7 @@ async function cargarPanel() {
           <i class="bi bi-person-lock" style="font-size:3rem;color:var(--verde);"></i>
           <h1 class="h4 mt-3" style="font-weight:700;">Debes iniciar sesión</h1>
           <p class="text-secondary">Solo el administrador puede publicar los trabajos semanales.</p>
-          <button class="btn btn-unsm" data-bs-toggle="modal" data-bs-target="#modalAuth"><i class="bi bi-box-arrow-in-right me-1"></i>Iniciar sesión</button>
+          <button class="btn btn-unsm" onclick="abrirModalSesion()"><i class="bi bi-box-arrow-in-right me-1"></i>Iniciar sesión</button>
         </div>`;
       return;
     }

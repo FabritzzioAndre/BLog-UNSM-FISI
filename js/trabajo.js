@@ -89,7 +89,7 @@ function formComentario() {
       zona.innerHTML = `
         <div class="alert alert-info-unsm d-flex justify-content-between align-items-center flex-wrap gap-2 mb-0">
           <span class="small"><i class="bi bi-info-circle me-1"></i>Inicia sesión para dejar tu comentario.</span>
-          <button class="btn btn-unsm btn-sm" data-bs-toggle="modal" data-bs-target="#modalAuth">Iniciar sesión</button>
+          <button class="btn btn-unsm btn-sm" onclick="abrirModalSesion()">Iniciar sesión</button>
         </div>`;
       return;
     }
