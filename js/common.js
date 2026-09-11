@@ -208,15 +208,19 @@ async function renderNavSesion() {
   }
 
   const perfil = await obtenerPerfil();
+  const admin = await esAdmin();
   let link = '';
-  if (perfil && perfil.role === 'admin') {
+  if (admin) {
     link = `<a class="btn btn-unsm btn-sm px-3" href="admin.html"><i class="bi bi-cloud-arrow-up me-1"></i>Subir trabajo</a>`;
   }
+  const nombre = (perfil && perfil.full_name) ||
+    (sesion.user.user_metadata && sesion.user.user_metadata.full_name) ||
+    sesion.user.email;
 
   cont.innerHTML = `
     <div class="d-flex align-items-center gap-3">
       ${link}
-      <span class="navbar-session-name">${escapeHtml(perfil ? perfil.full_name : sesion.user.email)}</span>
+      <span class="navbar-session-name">${escapeHtml(nombre)}</span>
       <button class="btn btn-outline-unsm btn-sm px-3" id="btnSalir">
         <i class="bi bi-box-arrow-right me-1"></i>Salir
       </button>
