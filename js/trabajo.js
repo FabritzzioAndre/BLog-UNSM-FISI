@@ -187,7 +187,7 @@ async function cargarEntrada() {
           <div class="post-meta mt-2">
             <span><i class="bi bi-calendar3 me-1"></i>${formatDate(post.updated_at)}</span>
             <span><i class="bi bi-person me-1"></i>${escapeHtml(post.author_name || 'Docente')}</span>
-            <span class="estado estado-publicado"><i class="bi bi-check-circle-fill"></i> ${escapeHtml(unidadActual.nombre)} · Semana ${semana}</span>
+            <span class="estado ${esSemanaExamen(unidadActual, semana) ? 'estado-examen' : 'estado-publicado'}"><i class="bi ${esSemanaExamen(unidadActual, semana) ? 'bi-pencil-square' : 'bi-check-circle-fill'}"></i> ${escapeHtml(unidadActual.nombre)} · Semana ${semana}${esSemanaExamen(unidadActual, semana) ? ' · Examen' : ''}</span>
           </div>
         </div>
         ${respaldo}
@@ -234,13 +234,13 @@ async function cargarListaSemanas() {
     const porSemana = {};
     (posts || []).forEach((p) => { porSemana[p.week] = p; });
 
-    cont.innerHTML = '<ul>' + Array.from({ length: unidad.semanas }, (_, i) => {
-      const s = i + 1;
+    cont.innerHTML = '<ul>' + unidad.semanas.map((s) => {
       const post = porSemana[s];
       const activo = obtenerParams().semana === s ? ' active' : '';
+      const examen = esSemanaExamen(unidad, s) ? ' <span class="small" style="color:var(--dorado);"><i class="bi bi-pencil-square ms-1"></i></span>' : '';
+      const publicado = post ? '<span style="color:var(--verde);"><i class="bi bi-check-circle-fill ms-1"></i></span>' : '';
       return `<li><a class="${activo}" href="${hlkSemana(unidad.numero, s)}">
-        <i class="bi bi-calendar-week me-2"></i>Semana ${s}
-        ${post ? '<span style="color:var(--verde);"><i class="bi bi-check-circle-fill ms-1"></i></span>' : ''}
+        <i class="bi bi-calendar-week me-2"></i>Semana ${s}${examen}${publicado}
       </a></li>`;
     }).join('') + '</ul>';
   } catch {

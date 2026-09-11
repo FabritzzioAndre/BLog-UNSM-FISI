@@ -326,6 +326,11 @@ a:hover {
   color: var(--gris);
 }
 
+.estado-examen {
+  background: #fdf3d8;
+  color: #8a6d1a;
+}
+
 .week-card.placeholder {
   border-left-color: #adb5bd;
   background: #fbfcfb;

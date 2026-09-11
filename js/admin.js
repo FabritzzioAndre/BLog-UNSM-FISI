@@ -18,9 +18,13 @@ function extDe(nombre) {
   return m ? m[1].toLowerCase() : 'bin';
 }
 
-function semanaMax(unidad) {
+function opcionesSemanas(unidad, seleccionada) {
   const u = unidadPorNumero(unidad);
-  return u ? u.semanas : 6;
+  if (!u) return '';
+  return u.semanas.map((s) => {
+    const etiqueta = esSemanaExamen(u, s) ? `Semana ${s} (Examen)` : `Semana ${s}`;
+    return `<option value="${s}" ${s === Number(seleccionada) ? 'selected' : ''}>${etiqueta}</option>`;
+  }).join('');
 }
 
 function renderErroresVinculacion(err) {
@@ -32,14 +36,6 @@ function renderErroresVinculacion(err) {
       <p class="mb-1">${escapeHtml(mensaje)}</p>
       ${faltaTabla ? '<p class="small mb-0">Ejecuta el archivo <code>sql/schema.sql</code> en el SQL Editor de Supabase y vuelve a entrar.</p>' : ''}
     </div>`;
-}
-
-function opcionesSemanas(unidad, seleccionada) {
-  const max = semanaMax(unidad);
-  return Array.from({ length: max }, (_, i) => {
-    const s = i + 1;
-    return `<option value="${s}" ${s === Number(seleccionada) ? 'selected' : ''}>Semana ${s}</option>`;
-  }).join('');
 }
 
 function renderFormulario() {

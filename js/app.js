@@ -8,45 +8,49 @@ const romano = {
   3: 'III'
 };
 
-function cardPublicada(post) {
+function cardPublicada(post, esExamen) {
   const unidad = unidadPorNumero(post.unit);
   const tieneArchivo = post.file_url ? `<i class="bi bi-paperclip ms-1" title="Tiene archivo adjunto"></i>` : '';
+  const estado = esExamen
+    ? '<span class="estado estado-examen"><i class="bi bi-pencil-square"></i> Examen</span>'
+    : '<span class="estado estado-publicado"><i class="bi bi-check-circle-fill"></i> Publicado</span>';
   return `
     <div class="week-card">
       <div class="semana-tag">Semana ${post.week}</div>
       <h3><a href="trabajo.html?unidad=${post.unit}&semana=${post.week}">${escapeHtml(post.title)}</a> ${tieneArchivo}</h3>
       <p>${escapeHtml(post.description)}</p>
       <div class="meta">
-        <span class="estado estado-publicado"><i class="bi bi-check-circle-fill"></i> Publicado</span>
+        ${estado}
         <span class="small text-secondary"><i class="bi bi-calendar3 me-1"></i>${formatDate(post.updated_at)} · ${escapeHtml(post.author_name || 'Docente')}</span>
       </div>
     </div>`;
 }
 
-function cardPendiente(unidad, semana) {
+function cardPendiente(unidad, semana, esExamen) {
   return `
     <div class="week-card placeholder">
-      <div class="semana-tag" style="color:var(--gris);">Semana ${semana}</div>
-      <h3 class="placeholder-title">Trabajo de la semana ${semana}</h3>
-      <p>El trabajo aún no ha sido publicado.</p>
+      <div class="semana-tag" style="color:var(--gris);">Semana ${semana}${esExamen ? ' · Examen' : ''}</div>
+      <h3 class="placeholder-title">${esExamen ? 'Examen de la unidad' : `Trabajo de la semana ${semana}`}</h3>
+      <p>${esExamen ? 'El examen aún no ha sido publicado.' : 'El trabajo aún no ha sido publicado.'}</p>
       <div class="meta">
-        <span class="estado estado-pendiente"><i class="bi bi-hourglass-split"></i> Pendiente</span>
+        <span class="estado ${esExamen ? 'estado-examen' : 'estado-pendiente'}"><i class="bi ${esExamen ? 'bi-pencil-square' : 'bi-hourglass-split'}"></i> ${esExamen ? 'Examen' : 'Pendiente'}</span>
       </div>
     </div>`;
 }
 
 function seccionUnidad(unidad, postsPorSemana) {
   const tarjetas = [];
-  for (let semana = 1; semana <= unidad.semanas; semana++) {
+  for (const semana of unidad.semanas) {
+    const examen = esSemanaExamen(unidad, semana);
     const post = postsPorSemana[semana];
-    tarjetas.push(post ? cardPublicada(post) : cardPendiente(unidad, semana));
+    tarjetas.push(post ? cardPublicada(post, examen) : cardPendiente(unidad, semana, examen));
   }
   return `
     <div id="unidad-${unidad.numero}" class="mb-4">
       <div class="section-title">
         <span class="badge-icon">${romano[unidad.numero]}</span>
         <div>
-          <h2>${escapeHtml(unidad.nombre)} <small class="text-muted fs-6">· ${unidad.semanas} semanas</small></h2>
+          <h2>${escapeHtml(unidad.nombre)} <small class="text-muted fs-6">· ${etiquetaSemanas(unidad)}</small></h2>
           <p class="sub">${escapeHtml(unidad.descripcion)}</p>
         </div>
       </div>
