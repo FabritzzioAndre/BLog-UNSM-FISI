@@ -1,0 +1,18 @@
+# Dependencias locales (si algún día usas npm)
+node_modules/
+dist/
+.pnp.*
+
+# Archivos de entorno (NUNCA subir claves)
+.env
+.env.local
+.env.*.local
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Archivos temporales de editor
+.vscode/
+.idea/

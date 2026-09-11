@@ -1,0 +1,550 @@
+/* ============================================================
+   Blogdetareas - UNSM FISI
+   Tema inspirado en "Maya" por BTemplates, adaptado a los
+   colores oficiales de la Universidad Nacional de San Martín.
+   ============================================================ */
+
+:root {
+  --verde: #0c7a3e;
+  --verde-oscuro: #085c2e;
+  --verde-brillante: #12a150;
+  --verde-claro: #e7f5ec;
+  --dorado: #c9a227;
+  --hover: #d8815f;
+  --texto: #212529;
+  --gris: #6c757d;
+  --borde: #dee2e6;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  background: #f6f8f5;
+  color: var(--texto);
+}
+
+a {
+  color: var(--verde);
+}
+
+a:hover {
+  color: var(--hover);
+}
+
+/* ---------- Barra superior ---------- */
+.topbar {
+  background: #212529;
+  color: #adb5bd;
+  font-size: 0.85rem;
+}
+
+.topbar a {
+  color: #ced4da;
+  text-decoration: none;
+}
+
+.topbar a:hover {
+  color: #fff;
+}
+
+/* ---------- Barra de navegación ---------- */
+.navbar-blog {
+  background: #fff;
+  border-bottom: 1px solid var(--borde);
+}
+
+.navbar-blog .navbar-brand {
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.navbar-blog .navbar-brand img {
+  height: 42px;
+  width: auto;
+}
+
+.navbar-blog .nav-link {
+  color: var(--texto);
+  font-weight: 500;
+}
+
+.navbar-blog .nav-link:hover {
+  color: var(--verde);
+}
+
+.btn-unsm {
+  background: var(--verde);
+  color: #fff;
+  border: none;
+}
+
+.btn-unsm:hover {
+  background: var(--verde-oscuro);
+  color: #fff;
+}
+
+.btn-outline-unsm {
+  border: 1px solid var(--verde);
+  color: var(--verde);
+  background: transparent;
+}
+
+.btn-outline-unsm:hover {
+  background: var(--verde);
+  color: #fff;
+}
+
+.btn-dorado {
+  background: var(--dorado);
+  color: #fff;
+  border: none;
+}
+
+.btn-dorado:hover {
+  background: #a8871d;
+  color: #fff;
+}
+
+/* ---------- Cabecera del blog ---------- */
+.blog-hero {
+  background:
+    radial-gradient(circle at 20% 120%, rgba(255, 255, 255, 0.12) 0, transparent 40%),
+    linear-gradient(160deg, var(--verde-brillante) 0%, var(--verde) 45%, var(--verde-oscuro) 100%);
+  color: #fff;
+  padding: 3.5rem 1rem 6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-hero .escudo {
+  height: 128px;
+  width: auto;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
+  margin-bottom: 1rem;
+}
+
+.blog-hero h1 {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+}
+
+.blog-hero .facu {
+  font-size: 1.05rem;
+  opacity: 0.95;
+  margin-bottom: 0.15rem;
+}
+
+.blog-hero .lema {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.6rem;
+  color: #ffe9a8;
+  margin: 0.35rem 0 0;
+}
+
+.blog-hero .hero-chips {
+  margin-top: 1.25rem;
+}
+
+.hero-chip {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 30px;
+  padding: 0.3rem 1rem;
+  margin: 0 0.25rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- Contenido principal (solapa la cabecera) ---------- */
+.blog-content {
+  margin-top: -3.8rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .blog-content {
+    padding: 2rem;
+  }
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 2px solid var(--verde-claro);
+  padding-bottom: 0.6rem;
+  margin: 1.75rem 0 0.4rem;
+}
+
+.section-title:first-child {
+  margin-top: 0;
+}
+
+.section-title .badge-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--verde);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex: 0 0 auto;
+}
+
+.section-title h2 {
+  font-size: 1.35rem;
+  margin: 0;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+}
+
+.section-title .sub {
+  color: var(--gris);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ---------- Tarjetas de semanas ---------- */
+.week-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .week-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.week-card {
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--verde);
+  border-radius: 8px;
+  background: #fff;
+  padding: 0.9rem 1rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.week-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(12, 122, 62, 0.12);
+}
+
+.week-card .semana-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--verde);
+  margin-bottom: 0.25rem;
+}
+
+.week-card h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.35rem;
+}
+
+.week-card h3 a {
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.week-card h3 a:hover {
+  color: var(--verde);
+}
+
+.week-card p {
+  font-size: 0.88rem;
+  color: var(--gris);
+  margin-bottom: 0.75rem;
+}
+
+.week-card .meta {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.6rem;
+  border-radius: 20px;
+}
+
+.estado-publicado {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+}
+
+.estado-pendiente {
+  background: #f1f3f5;
+  color: var(--gris);
+}
+
+.week-card.placeholder {
+  border-left-color: #adb5bd;
+  background: #fbfcfb;
+}
+
+.placeholder-title {
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* ---------- Barra lateral ---------- */
+.widget-card {
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  background: #fff;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.widget-card .widget-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  padding: 0.85rem 1rem 0.6rem;
+  margin: 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.widget-card .widget-body {
+  padding: 0.9rem 1rem;
+}
+
+.widget-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widget-card li a {
+  display: block;
+  padding: 0.45rem 0.75rem;
+  color: var(--texto);
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.widget-card li a:hover {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--verde);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--gris);
+}
+
+/* ---------- Entrada completa (semana) ---------- */
+.post-full .post-head {
+  border-bottom: 1px solid var(--borde);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.post-full h1 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--texto);
+}
+
+.post-full .post-meta {
+  color: var(--gris);
+  font-size: 0.85rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.post-body {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #343a40;
+}
+
+.post-body p {
+  margin-bottom: 1rem;
+}
+
+.post-body img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.respaldo {
+  background: var(--verde-claro);
+  border: 1px dashed var(--verde);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- Comentarios ---------- */
+.comentario {
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+}
+
+.comentario .avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--verde);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-right: 0.6rem;
+}
+
+.comentario .autor {
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.comentario .fecha {
+  color: var(--gris);
+  font-size: 0.8rem;
+}
+
+.comentario .texto {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+.comentario .btn-borrar {
+  font-size: 0.75rem;
+  color: #dc3545;
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+
+/* ---------- Pie de página ---------- */
+.blog-footer {
+  background: linear-gradient(160deg, var(--verde) 0%, var(--verde-oscuro) 100%);
+  color: #fff;
+  margin-top: 3rem;
+  padding: 2.5rem 0 1.5rem;
+}
+
+.blog-footer a {
+  color: #cde9d7;
+  text-decoration: none;
+}
+
+.blog-footer a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.blog-footer .footer-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.blog-footer .copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1.75rem;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+/* ---------- Contenido editorial (sobre) ---------- */
+.editorial {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.editorial .lema-big {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2rem;
+  color: var(--verde);
+  text-align: center;
+}
+
+/* ---------- Tablas admin ---------- */
+.tabla-trabajos th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--gris);
+}
+
+.tabla-trabajos .badge-unidad {
+  background: var(--verde-claro);
+  color: var(--verde-oscuro);
+}
+
+/* ---------- Utilidades ---------- */
+.alert-info-unsm {
+  background: var(--verde-claro);
+  border: 1px solid #bcdbc7;
+  color: var(--verde-oscuro);
+}
+
+.marca-titulo {
+  font-family: 'Great Vibes', cursive;
+  color: var(--verde-oscuro);
+}
+
+.breadcrumb-unsm {
+  background: var(--verde-claro);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.88rem;
+}
+
+.spinner-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+}
