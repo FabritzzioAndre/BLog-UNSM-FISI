@@ -4,6 +4,8 @@
    colores oficiales de la Universidad Nacional de San Martín.
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&display=swap');
+
 :root {
   --verde: #0c7a3e;
   --verde-oscuro: #085c2e;
@@ -62,6 +64,13 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.55rem;
+}
+
+.navbar-blog .navbar-brand span {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
 }
 
 .navbar-blog .navbar-brand img {
@@ -146,10 +155,12 @@ a:hover {
 }
 
 .blog-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   margin-bottom: 0.25rem;
-  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
 }
 
 .blog-hero .facu {
@@ -520,7 +531,8 @@ a:hover {
 }
 
 .blog-footer .footer-title {
-  font-size: 1.05rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
 }
