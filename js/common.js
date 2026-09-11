@@ -210,7 +210,7 @@ async function renderNavSesion() {
   const perfil = await obtenerPerfil();
   let link = '';
   if (perfil && perfil.role === 'admin') {
-    link = `<a class="nav-link" href="admin.html"><i class="bi bi-speedometer2 me-1"></i>Panel</a>`;
+    link = `<a class="btn btn-unsm btn-sm px-3" href="admin.html"><i class="bi bi-cloud-arrow-up me-1"></i>Subir trabajo</a>`;
   }
 
   cont.innerHTML = `

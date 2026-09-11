@@ -46,7 +46,7 @@ function renderFormulario() {
   return `
   <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
     <h1 class="h3 mb-0" style="font-weight:800;color:var(--verde-oscuro);">
-      <i class="bi bi-cloud-arrow-up me-2"></i>${p ? 'Editar trabajo' : 'Publicar trabajo semanal'}
+      <i class="bi bi-cloud-arrow-up me-2"></i>${p ? 'Editar trabajo' : 'Subir trabajo semanal'}
     </h1>
     <a class="btn btn-outline-unsm btn-sm" href="index.html"><i class="bi bi-eye me-1"></i>Ver página pública</a>
   </div>
@@ -70,8 +70,20 @@ function renderFormulario() {
         <input class="form-control" id="campoTitulo" type="text" required maxlength="200"
           value="${escapeHtml(p ? p.title : '')}" placeholder="Ej.: Semana 1 – Conceptos básicos de investigación">
       </div>
+      <div class="col-md-6">
+        <label class="form-label">Asignatura</label>
+        <input class="form-control" id="campoAsignatura" type="text" maxlength="120"
+          value="${escapeHtml(p ? (p.asignatura || '') : 'Teoría General de Sistemas')}"
+          placeholder="Ej.: Teoría General de Sistemas">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Período académico</label>
+        <input class="form-control" id="campoPeriodo" type="text" maxlength="30"
+          value="${escapeHtml(p ? (p.periodo || '') : '2026-II')}"
+          placeholder="Ej.: 2026-II">
+      </div>
       <div class="col-12">
-        <label class="form-label">Resumen (se muestra en la tarjeta del inicio)</label>
+        <label class="form-label">Resumen corto (se muestra en la tarjeta del inicio)</label>
         <textarea class="form-control" id="campoDescripcion" rows="2" maxlength="300"
           placeholder="Una o dos frases que resuman el trabajo.">${escapeHtml(p ? p.description : '')}</textarea>
       </div>
@@ -81,8 +93,8 @@ function renderFormulario() {
           placeholder="Escribe aquí el contenido del trabajo. Deja una línea en blanco para separar párrafos.">${escapeHtml(p ? p.content : '')}</textarea>
       </div>
       <div class="col-12">
-        <label class="form-label">Archivo adjunto (Word, PDF, PowerPoint, Excel, imagen u otros)</label>
-        <input class="form-control" type="file" id="campoArchivo" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar,.png,.jpg,.jpeg">
+        <label class="form-label">Archivos del trabajo (elige uno o varios desde tu PC o laptop: Word, PDF, PowerPoint, etc.)</label>
+        <input class="form-control" type="file" id="campoArchivo" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar,.png,.jpg,.jpeg,.mp3,.mp4">
         <div class="form-text" id="archivoActual"></div>
       </div>
       <div class="col-12 d-flex gap-2 flex-wrap">
@@ -124,7 +136,7 @@ function renderTabla(posts) {
               <td><span class="badge badge-unidad">U${p.unit}</span></td>
               <td>Semana ${p.week}</td>
               <td><a href="trabajo.html?unidad=${p.unit}&semana=${p.week}" target="_blank">${escapeHtml(p.title)}</a></td>
-              <td>${p.file_name ? '<i class="bi bi-paperclip text-success" title="' + escapeHtml(p.file_name) + '"></i>' : '<span class="text-secondary">—</span>'}</td>
+              <td>${(p.archivos && p.archivos.length ? (p.archivos.length + ' archivo(s)') : null) || (p.file_name ? '1 archivo' : '<span class="text-secondary">—</span>')}</td>
               <td class="small text-secondary">${formatDate(p.updated_at)}</td>
               <td class="text-end text-nowrap">
                 <button class="btn btn-sm btn-outline-unsm" onclick="cargarEnFormulario(${p.id})" title="Editar"><i class="bi bi-pencil"></i></button>
@@ -152,18 +164,26 @@ async function cargarEnFormulario(id) {
   const zona = document.getElementById('contenido-admin');
   zona.innerHTML = renderFormulario();
   vincularFormulario();
-  if (p.file_name) {
+  const listaArchivos = (p.archivos && p.archivos.length)
+    ? p.archivos.map((a) => escapeHtml(a.name || 'Documento adjunto')).join(', ')
+    : (p.file_name ? escapeHtml(p.file_name) : '');
+  if (listaArchivos) {
     document.getElementById('archivoActual').innerHTML =
-      `Archivo actual: <strong>${escapeHtml(p.file_name)}</strong>. Si eliges otro archivo se reemplazará.`;
+      `Archivos actuales: <strong>${listaArchivos}</strong>. Si eliges más archivos se agregarán.`;
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 async function borrarTrabajo(id) {
-  const { data: p } = await supabase.from('posts').select('file_path').eq('id', id).maybeSingle();
+  const { data: p } = await supabase.from('posts').select('file_path, archivos').eq('id', id).maybeSingle();
   if (!confirm('¿Borrar este trabajo y su archivo?')) return;
-  if (p && p.file_path) {
-    await supabase.storage.from('trabajos').remove([p.file_path]);
+  const rutas = [];
+  if (p && p.file_path) rutas.push(p.file_path);
+  if (p && Array.isArray(p.archivos)) {
+    p.archivos.forEach((a) => { if (a && a.path && !rutas.includes(a.path)) rutas.push(a.path); });
+  }
+  if (rutas.length) {
+    await supabase.storage.from('trabajos').remove(rutas);
   }
   const { error } = await supabase.from('posts').delete().eq('id', id);
   if (error) {
@@ -295,9 +315,11 @@ async function guardarTrabajo(e) {
   const si = document.getElementById('campoUnidad').value;
   const semana = document.getElementById('campoSemana').value;
   const titulo = document.getElementById('campoTitulo').value.trim();
+  const asignatura = document.getElementById('campoAsignatura').value.trim() || 'Teoría General de Sistemas';
+  const periodo = document.getElementById('campoPeriodo').value.trim() || '2026-II';
   const descripcion = document.getElementById('campoDescripcion').value.trim();
   const contenido = document.getElementById('campoContenido').value.trim();
-  const archivo = document.getElementById('campoArchivo').files[0];
+  const archivosNuevos = document.getElementById('campoArchivo').files;
 
   if (!titulo) return mostrarNotificacion('Escribe un título.', true);
 
@@ -312,6 +334,8 @@ async function guardarTrabajo(e) {
       unit: Number(si),
       week: Number(semana),
       title: titulo,
+      asignatura: asignatura,
+      periodo: periodo,
       description: descripcion,
       content: contenido,
       author_id: sesion.user.id,
@@ -320,29 +344,36 @@ async function guardarTrabajo(e) {
     };
     if (postEditando) datos.id = postEditando.id;
 
-    /* Archivo adjunto */
-    if (archivo) {
-      const nombreNuevo = nombreSeguro(archivo.name) + '-' + Date.now() + '.' + extDe(archivo.name);
-      const ruta = `u${si}/s${semana}/${nombreNuevo}`;
+    /* Archivos del trabajo: conserva los existentes y agrega los nuevos */
+    let archivos = (postEditando && Array.isArray(postEditando.archivos))
+      ? postEditando.archivos.slice()
+      : [];
+    if (archivos.length === 0 && postEditando && postEditando.file_url) {
+      archivos = [{ name: postEditando.file_name || 'Documento adjunto', url: postEditando.file_url, path: postEditando.file_path }];
+    }
 
-      if (postEditando && postEditando.file_path) {
-        await supabase.storage.from('trabajos').remove([postEditando.file_path]);
+    if (archivosNuevos && archivosNuevos.length) {
+      for (const archivo of archivosNuevos) {
+        const nombreNuevo = nombreSeguro(archivo.name) + '-' + Date.now() + '.' + extDe(archivo.name);
+        const ruta = `u${si}/s${semana}/${nombreNuevo}`;
+        const { error: errUpload } = await supabase.storage
+          .from('trabajos')
+          .upload(ruta, archivo, { upsert: true });
+        if (errUpload) throw new Error('No se pudo subir el archivo: ' + errUpload.message);
+        const { data: pub } = supabase.storage.from('trabajos').getPublicUrl(ruta);
+        archivos.push({ name: archivo.name, url: pub.publicUrl, path: ruta });
       }
+    }
 
-      const { error: errUpload } = await supabase.storage
-        .from('trabajos')
-        .upload(ruta, archivo, { upsert: true });
-
-      if (errUpload) throw new Error('No se pudo subir el archivo: ' + errUpload.message);
-
-      const { data: pub } = supabase.storage.from('trabajos').getPublicUrl(ruta);
-      datos.file_url = pub.publicUrl;
-      datos.file_path = ruta;
-      datos.file_name = archivo.name;
-    } else if (postEditando) {
-      if (postEditando.file_url) datos.file_url = postEditando.file_url;
-      if (postEditando.file_path) datos.file_path = postEditando.file_path;
-      if (postEditando.file_name) datos.file_name = postEditando.file_name;
+    datos.archivos = archivos;
+    if (archivos.length) {
+      datos.file_url = archivos[0].url;
+      datos.file_path = archivos[0].path;
+      datos.file_name = archivos[0].name;
+    } else {
+      datos.file_url = null;
+      datos.file_path = null;
+      datos.file_name = null;
     }
 
     const { error: errPost } = await supabase
@@ -355,7 +386,7 @@ async function guardarTrabajo(e) {
     document.getElementById('contenido-admin').innerHTML = renderFormulario();
     vincularFormulario();
     await cargarTabla();
-    mostrarNotificacion('Trabajo guardado correctamente.');
+    mostrarNotificacion('Trabajo guardado correctamente. Ya aparece en la semana seleccionada.');
   } catch (err) {
     mostrarNotificacion(err.message || 'Error al guardar.', true);
   } finally {

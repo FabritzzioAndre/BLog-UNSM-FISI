@@ -165,17 +165,24 @@ async function cargarEntrada() {
     }
 
     postActual = post;
-    const respaldo = post.file_url
-      ? `
+    const adjuntos = (post.archivos && post.archivos.length)
+      ? post.archivos
+      : (post.file_url
+        ? [{ name: post.file_name || 'Documento adjunto', url: post.file_url }]
+        : []);
+    const respaldo = adjuntos.length ? `
       <div class="respaldo">
-        <i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size:1.8rem;"></i>
+        <i class="bi bi-folder2-open text-success" style="font-size:1.8rem;"></i>
         <div class="flex-grow-1">
-          <strong>${escapeHtml(post.file_name || 'Documento adjunto')}</strong>
-          <div class="small text-secondary">Descarga el trabajo de la semana ${post.week}.</div>
+          <strong>${adjuntos.length === 1 ? 'Archivo adjunto' : adjuntos.length + ' archivos adjuntos'}</strong>
+          <div class="small text-secondary">Descarga el material de la semana ${post.week}.</div>
         </div>
-        <a class="btn btn-outline-unsm btn-sm" href="${escapeHtml(post.file_url)}" target="_blank" rel="noopener">
-          <i class="bi bi-download me-1"></i>Descargar
-        </a>
+        <div class="d-flex flex-column gap-1">
+          ${adjuntos.map((a) => `
+            <a class="btn btn-outline-unsm btn-sm text-start" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">
+              <i class="bi bi-download me-1"></i>${escapeHtml(a.name || 'Descargar')}
+            </a>`).join('')}
+        </div>
       </div>`
       : '';
 
@@ -187,6 +194,7 @@ async function cargarEntrada() {
           <div class="post-meta mt-2">
             <span><i class="bi bi-calendar3 me-1"></i>${formatDate(post.updated_at)}</span>
             <span><i class="bi bi-person me-1"></i>${escapeHtml(post.author_name || 'Docente')}</span>
+            ${post.asignatura ? `<span><i class="bi bi-book me-1"></i>${escapeHtml(post.asignatura)}${post.periodo ? ' · ' + escapeHtml(post.periodo) : ''}</span>` : ''}
             <span class="estado ${esSemanaExamen(unidadActual, semana) ? 'estado-examen' : 'estado-publicado'}"><i class="bi ${esSemanaExamen(unidadActual, semana) ? 'bi-pencil-square' : 'bi-check-circle-fill'}"></i> ${escapeHtml(unidadActual.nombre)} · Semana ${semana}${esSemanaExamen(unidadActual, semana) ? ' · Examen' : ''}</span>
           </div>
         </div>
