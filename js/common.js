@@ -151,12 +151,7 @@ function inyectarModalAuth() {
         mostrarNotificacion('Sesión iniciada correctamente.');
       }
       bootstrap.Modal.getInstance(document.getElementById('modalAuth')).hide();
-      form.reset();
-      registro.checked = false;
-      nombreWrap.classList.add('d-none');
-      titulo.textContent = 'Iniciar sesión';
-      boton.textContent = 'Iniciar sesión';
-      await actualizarNav();
+      setTimeout(() => { window.location.href = 'index.html'; }, 650);
     } catch (err) {
       errorBox.textContent = err.message || 'Error al iniciar sesión.';
       errorBox.classList.remove('d-none');
@@ -229,7 +224,7 @@ async function renderNavSesion() {
   document.getElementById('btnSalir').addEventListener('click', async () => {
     await supabase.auth.signOut();
     mostrarNotificacion('Sesión cerrada.');
-    await actualizarNav();
+    setTimeout(() => { window.location.href = 'index.html'; }, 750);
   });
 }
 

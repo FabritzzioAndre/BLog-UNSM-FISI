@@ -278,10 +278,8 @@ async function guardarTrabajo(e) {
     if (errPost) throw errPost;
 
     postEditando = null;
-    document.getElementById('contenido-admin').innerHTML = renderFormulario();
-    vincularFormulario();
-    await cargarTabla();
     mostrarNotificacion('Trabajo guardado correctamente. Ya aparece en la semana seleccionada.');
+    setTimeout(() => { window.location.href = 'index.html'; }, 900);
   } catch (err) {
     mostrarNotificacion(err.message || 'Error al guardar.', true);
   } finally {
