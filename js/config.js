@@ -15,7 +15,7 @@ const SUPABASE_CONFIG = {
 const UNIDADES = [
   { numero: 1, nombre: 'Unidad 1', semanas: [1, 2, 3, 4, 5], examenSemana: 5, descripcion: 'Fundamentos de la asignatura' },
   { numero: 2, nombre: 'Unidad 2', semanas: [6, 7, 8, 9, 10], examenSemana: 10, descripcion: 'Desarrollo práctico de contenidos' },
-  { numero: 3, nombre: 'Unidad 3', semanas: [16], examenSemana: 16, descripcion: 'Aplicación y trabajo final' }
+  { numero: 3, nombre: 'Unidad 3', semanas: [11, 12, 13, 14, 15, 16], examenSemana: 16, descripcion: 'Aplicación y trabajo final' }
 ];
 
 /* Retorna la lista de semanas de una unidad.
