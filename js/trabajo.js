@@ -175,13 +175,19 @@ async function cargarEntrada() {
         <i class="bi bi-folder2-open text-success" style="font-size:1.8rem;"></i>
         <div class="flex-grow-1">
           <strong>${adjuntos.length === 1 ? 'Archivo adjunto' : adjuntos.length + ' archivos adjuntos'}</strong>
-          <div class="small text-secondary">Descarga el material de la semana ${post.week}.</div>
+          <div class="small text-secondary"><i class="bi bi-eye me-1"></i>Ver abre el archivo en otra pestaña para leerlo o descargarlo.</div>
         </div>
         <div class="d-flex flex-column gap-1">
           ${adjuntos.map((a) => `
-            <a class="btn btn-outline-unsm btn-sm text-start" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">
-              <i class="bi bi-download me-1"></i>${escapeHtml(a.name || 'Descargar')}
-            </a>`).join('')}
+            <div class="d-flex align-items-center gap-1 justify-content-end">
+              <span class="small text-secondary text-truncate adjunto-nombre" title="${escapeHtml(a.name || '')}">${escapeHtml(a.name || 'Ver archivo')}</span>
+              <a class="btn btn-outline-unsm btn-sm text-nowrap" href="${escapeHtml(a.url)}" target="_blank" rel="noopener" title="Abrir en otra pestaña">
+                <i class="bi bi-eye me-1"></i>Ver
+              </a>
+              <a class="btn btn-unsm btn-sm text-nowrap" href="${escapeHtml(a.url)}" download title="Descargar">
+                <i class="bi bi-download me-1"></i>Descargar
+              </a>
+            </div>`).join('')}
         </div>
       </div>`
       : '';

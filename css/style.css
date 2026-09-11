@@ -443,6 +443,10 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.respaldo .adjunto-nombre {
+  max-width: 160px;
+}
+
 /* ---------- Comentarios ---------- */
 .comentario {
   border: 1px solid var(--borde);

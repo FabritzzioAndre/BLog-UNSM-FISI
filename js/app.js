@@ -16,7 +16,7 @@ function cardPublicada(post, esExamen) {
     ? '<span class="estado estado-examen"><i class="bi bi-pencil-square"></i> Examen</span>'
     : '<span class="estado estado-publicado"><i class="bi bi-check-circle-fill"></i> Publicado</span>';
   return `
-    <div class="week-card">
+    <div class="week-card" style="cursor:pointer" onclick="window.location.href='trabajo.html?unidad=${post.unit}&semana=${post.week}'">
       <div class="semana-tag">Semana ${post.week}</div>
       <h3><a href="trabajo.html?unidad=${post.unit}&semana=${post.week}">${escapeHtml(post.title)}</a> ${tieneArchivo}</h3>
       <p>${escapeHtml(post.description)}</p>
