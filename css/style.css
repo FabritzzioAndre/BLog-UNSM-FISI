@@ -493,6 +493,14 @@ a:hover {
   text-decoration: underline;
 }
 
+.comentario .btn-editar {
+  font-size: 0.75rem;
+  color: var(--verde);
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+
 /* ---------- Pie de página ---------- */
 .blog-footer {
   background: linear-gradient(160deg, var(--verde) 0%, var(--verde-oscuro) 100%);

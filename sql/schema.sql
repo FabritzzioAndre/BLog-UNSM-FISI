@@ -94,6 +94,7 @@ create table if not exists public.comments (
   post_id bigint not null references public.posts (id) on delete cascade,
   user_id uuid not null references public.profiles (id) on delete cascade,
   content text not null check (char_length(content) between 1 and 1000),
+  author_name text,
   created_at timestamptz not null default now()
 );
 
@@ -127,6 +128,10 @@ create policy "comments_insercion_autenticado" on public.comments
 -- Cada usuario borra solo sus propios comentarios
 create policy "comments_borrado_autor" on public.comments
   for delete to authenticated using (auth.uid() = user_id);
+
+-- Cada usuario edita solo sus propios comentarios
+create policy "comments_edicion_autor" on public.comments
+  for update to authenticated using (auth.uid() = user_id);
 
 -- ------------------------------------------------------------
 -- 5) Permisos para el Data API (PostgREST)
@@ -171,6 +176,7 @@ alter table public.posts add column if not exists periodo text not null default 
 alter table public.posts add column if not exists archivos jsonb not null default '[]'::jsonb;
 alter table public.posts drop constraint if exists posts_week_check;
 alter table public.posts add constraint posts_week_check check (week between 1 and 16);
+alter table public.comments add column if not exists author_name text;
 
 -- ------------------------------------------------------------
 -- 8) Corrección de la secuencia de identidad (aplica siempre)

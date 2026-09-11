@@ -18,7 +18,7 @@ function hlkSemana(unidad, semana) {
 }
 
 function renderComentario(c) {
-  const nombre = c.profiles && c.profiles.full_name ? c.profiles.full_name : 'Estudiante';
+  const nombre = c.author_name || (c.profiles && c.profiles.full_name) || 'Estudiante';
   return `
     <div class="comentario" id="comentario-${c.id}">
       <div class="d-flex align-items-start">
@@ -28,7 +28,7 @@ function renderComentario(c) {
             <span class="autor">${escapeHtml(nombre)}</span>
             <span class="fecha"><i class="bi bi-clock me-1"></i>${formatDateTime(c.created_at)}</span>
           </div>
-          <div class="texto">${escapeHtml(c.content)}</div>
+          <div class="texto" id="texto-comentario-${c.id}">${escapeHtml(c.content)}</div>
         </div>
       </div>
       <div id="comentario-acciones-${c.id}"></div>
@@ -61,9 +61,14 @@ async function cargarComentarios() {
         const zona = document.getElementById(`comentario-acciones-${c.id}`);
         if (zona) {
           zona.innerHTML = `
-            <button class="btn-borrar" onclick="borrarComentario(${c.id})">
-              <i class="bi bi-trash me-1"></i>Borrar mi comentario
-            </button>`;
+            <div class="d-flex gap-2">
+              <button class="btn-editar" onclick="editarComentario(${c.id})">
+                <i class="bi bi-pencil me-1"></i>Editar
+              </button>
+              <button class="btn-borrar" onclick="borrarComentario(${c.id})">
+                <i class="bi bi-trash me-1"></i>Borrar
+              </button>
+            </div>`;
         }
       }
     });
@@ -78,6 +83,41 @@ async function borrarComentario(id) {
   } else {
     document.getElementById(`comentario-${id}`)?.remove();
     mostrarNotificacion('Comentario eliminado.');
+  }
+}
+
+function editarComentario(id) {
+  const texto = document.getElementById(`texto-comentario-${id}`);
+  if (!texto) return;
+  const actual = texto.textContent;
+  texto.innerHTML = `
+    <textarea id="editarea-${id}" class="form-control" rows="3" maxlength="1000">${escapeHtml(actual)}</textarea>
+    <div class="d-flex gap-2 mt-2">
+      <button class="btn btn-unsm btn-sm px-3" onclick="guardarComentario(${id})">
+        <i class="bi bi-check-lg me-1"></i>Guardar
+      </button>
+      <button class="btn btn-secondary btn-sm px-3" onclick="cancelarEdicion(${id})">Cancelar</button>
+    </div>`;
+}
+
+function cancelarEdicion(id) {
+  cargarComentarios();
+}
+
+async function guardarComentario(id) {
+  const area = document.getElementById(`editarea-${id}`);
+  if (!area) return;
+  const contenido = area.value.trim();
+  if (!contenido) {
+    mostrarNotificacion('El comentario no puede quedar vacío.', true);
+    return;
+  }
+  const { error } = await supabase.from('comments').update({ content: contenido }).eq('id', id);
+  if (error) {
+    mostrarNotificacion('No se pudo editar el comentario.', true);
+  } else {
+    mostrarNotificacion('Comentario actualizado.');
+    await cargarComentarios();
   }
 }
 
@@ -121,6 +161,7 @@ function formComentario() {
       const { error } = await supabase.from('comments').insert({
         post_id: postActual.id,
         user_id: sesion.user.id,
+        author_name: (sesion.user.user_metadata && sesion.user.user_metadata.full_name) || sesion.user.email,
         content: contenido
       });
       document.getElementById('btnEnviarComentario').disabled = false;
@@ -264,3 +305,6 @@ async function cargarListaSemanas() {
 
 document.getElementById('anio').textContent = new Date().getFullYear();
 iniciarComun(cargarEntrada);
+window.editarComentario = editarComentario;
+window.cancelarEdicion = cancelarEdicion;
+window.guardarComentario = guardarComentario;
