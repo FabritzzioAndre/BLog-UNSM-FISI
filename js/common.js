@@ -146,7 +146,7 @@ function inyectarModalAuth() {
           mostrarNotificacion('Cuenta creada. Revisa tu correo para confirmar y poder iniciar sesión.');
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
         if (error) throw error;
         mostrarNotificacion('Sesión iniciada correctamente.');
       }
