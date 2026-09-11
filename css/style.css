@@ -123,11 +123,26 @@ a:hover {
   overflow: hidden;
 }
 
+.blog-hero .escudos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
 .blog-hero .escudo {
-  height: 128px;
+  height: 120px;
   width: auto;
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  .blog-hero .escudo {
+    height: 84px;
+  }
 }
 
 .blog-hero h1 {
