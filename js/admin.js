@@ -105,17 +105,7 @@ function renderFormulario() {
   </form>
   <hr class="my-4">
   <h2 class="h5 mb-3" style="font-weight:700;color:var(--verde-oscuro);"><i class="bi bi-list-ul me-2"></i>Trabajos publicados</h2>
-  <div id="tablaTrabajos"></div>
-
-  <hr class="my-4">
-  <h2 class="h5 mb-1" style="font-weight:700;color:var(--verde-oscuro);"><i class="bi bi-folder2-open me-2"></i>Subir archivos</h2>
-  <p class="small text-secondary mb-2">Sube aquí archivos sueltos (Word, PDF, PowerPoint, Excel, etc.) para compartirlos con el enlace.</p>
-  <div class="d-flex gap-2 align-items-start flex-wrap mb-3">
-    <input class="form-control" type="file" id="campoArchivoGeneral" multiple
-      accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar,.png,.jpg,.jpeg,.mp3,.mp4">
-    <button class="btn btn-unsm text-nowrap" id="btnSubirArchivos"><i class="bi bi-cloud-arrow-up me-1"></i>Subir archivos</button>
-  </div>
-  <div id="listaArchivosGeneral"></div>`;
+  <div id="tablaTrabajos"></div>`;
 }
 
 function renderTabla(posts) {
@@ -211,102 +201,7 @@ function vincularFormulario() {
     vincularFormulario();
   });
 
-  const btnSubirArchivos = document.getElementById('btnSubirArchivos');
-  if (btnSubirArchivos) btnSubirArchivos.addEventListener('click', subirArchivosGenerales);
-  cargarArchivosGeneral();
-
   document.getElementById('formTrabajo').addEventListener('submit', guardarTrabajo);
-}
-
-function tamanoHumano(bytes) {
-  if (!bytes) return '—';
-  const kb = bytes / 1024;
-  return kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : Math.round(kb) + ' KB';
-}
-
-async function subirArchivosGenerales() {
-  const input = document.getElementById('campoArchivoGeneral');
-  const archivos = input && input.files;
-  if (!archivos || !archivos.length) {
-    mostrarNotificacion('Elige al menos un archivo.', true);
-    return;
-  }
-  const boton = document.getElementById('btnSubirArchivos');
-  boton.disabled = true;
-  boton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo…';
-  try {
-    for (const f of archivos) {
-      const ruta = `documentos/${nombreSeguro(f.name)}-${Date.now()}.${extDe(f.name)}`;
-      const { error } = await supabase.storage.from('trabajos').upload(ruta, f, { upsert: true });
-      if (error) throw error;
-    }
-    input.value = '';
-    mostrarNotificacion('Archivos subidos correctamente.');
-    await cargarArchivosGeneral();
-  } catch (err) {
-    mostrarNotificacion('No se pudo subir: ' + (err.message || err), true);
-  } finally {
-    boton.disabled = false;
-    boton.innerHTML = '<i class="bi bi-cloud-arrow-up me-1"></i>Subir archivos';
-  }
-}
-
-async function cargarArchivosGeneral() {
-  const cont = document.getElementById('listaArchivosGeneral');
-  if (!cont) return;
-  const { data, error } = await supabase.storage
-    .from('trabajos')
-    .list('documentos', { sortBy: { column: 'created_at', order: 'desc' } });
-  if (error) {
-    cont.innerHTML = `<p class="small text-danger mb-0">${escapeHtml(error.message)}</p>`;
-    return;
-  }
-  if (!data || !data.length) {
-    cont.innerHTML = `<p class="small text-secondary mb-0">Aún no hay archivos subidos.</p>`;
-    return;
-  }
-  cont.innerHTML = `
-    <div class="table-responsive">
-      <table class="table table-sm align-middle tabla-trabajos">
-        <thead><tr><th>Archivo</th><th>Tamaño</th><th class="text-end">Acciones</th></tr></thead>
-        <tbody>
-          ${data.map((f) => {
-            const url = supabase.storage.from('trabajos').getPublicUrl(`documentos/${f.name}`).data.publicUrl;
-            return `<tr>
-              <td><i class="bi bi-file-earmark me-2 text-success"></i>${escapeHtml(f.name)}</td>
-              <td class="small text-secondary">${tamanoHumano(f.metadata ? f.metadata.size : 0)}</td>
-              <td class="text-end text-nowrap">
-                <button class="btn btn-sm btn-outline-unsm" onclick="copiarEnlaceArchivo('${encodeURIComponent(url)}')" title="Copiar enlace"><i class="bi bi-link-45deg"></i></button>
-                <a class="btn btn-sm btn-outline-unsm" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="Descargar"><i class="bi bi-download"></i></a>
-                <button class="btn btn-sm btn-outline-danger" onclick="borrarArchivoGeneral('${encodeURIComponent(f.name)}')" title="Borrar"><i class="bi bi-trash"></i></button>
-              </td>
-            </tr>`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>`;
-}
-
-async function copiarEnlaceArchivo(urlCodificada) {
-  const url = decodeURIComponent(urlCodificada);
-  try {
-    await navigator.clipboard.writeText(url);
-    mostrarNotificacion('Enlace copiado al portapapeles.');
-  } catch {
-    window.prompt('Copia este enlace:', url);
-  }
-}
-
-async function borrarArchivoGeneral(nombreCodificado) {
-  const nombre = decodeURIComponent(nombreCodificado);
-  if (!confirm(`¿Borrar "${nombre}"?`)) return;
-  const { error } = await supabase.storage.from('trabajos').remove([`documentos/${nombre}`]);
-  if (error) {
-    mostrarNotificacion('No se pudo borrar: ' + error.message, true);
-  } else {
-    mostrarNotificacion('Archivo eliminado.');
-    await cargarArchivosGeneral();
-  }
 }
 
 async function guardarTrabajo(e) {
@@ -437,5 +332,3 @@ document.getElementById('anio').textContent = new Date().getFullYear();
 iniciarComun(cargarPanel);
 window.cargarEnFormulario = cargarEnFormulario;
 window.borrarTrabajo = borrarTrabajo;
-window.borrarArchivoGeneral = borrarArchivoGeneral;
-window.copiarEnlaceArchivo = copiarEnlaceArchivo;
