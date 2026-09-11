@@ -10,7 +10,8 @@ const romano = {
 
 function cardPublicada(post, esExamen) {
   const unidad = unidadPorNumero(post.unit);
-  const tieneArchivo = post.file_url ? `<i class="bi bi-paperclip ms-1" title="Tiene archivo adjunto"></i>` : '';
+  const tieneArchivo = (post.file_url || (post.archivos && post.archivos.length))
+    ? `<i class="bi bi-paperclip ms-1" title="Tiene archivos adjuntos"></i>` : '';
   const estado = esExamen
     ? '<span class="estado estado-examen"><i class="bi bi-pencil-square"></i> Examen</span>'
     : '<span class="estado estado-publicado"><i class="bi bi-check-circle-fill"></i> Publicado</span>';
