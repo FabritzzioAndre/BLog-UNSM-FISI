@@ -597,3 +597,119 @@ a:hover {
   align-items: center;
   padding: 3rem 0;
 }
+
+/* ============================================================
+   REDISEÑO 2026 · FISI / UNSM
+   Solo presentación; no altera Supabase ni lógica de entradas.
+   ============================================================ */
+:root{
+  --verde:#11734b;
+  --verde-oscuro:#103e30;
+  --verde-brillante:#1a8d5b;
+  --verde-claro:#e7f4ec;
+  --dorado:#d0ab54;
+  --hover:#b18435;
+  --texto:#182b28;
+  --gris:#63736f;
+  --borde:#e1e9e5;
+}
+body{background:#f3f7f5;color:var(--texto);line-height:1.65}
+a{transition:color .18s ease}
+.container{max-width:1220px}
+.topbar{background:#103b2e;color:#d8e8de;padding:.3rem 0;font-size:.77rem;letter-spacing:.015em}
+.topbar a{color:#f3f7f3}
+.navbar-blog{background:rgba(255,255,255,.97);border-bottom:1px solid #e1eae4;box-shadow:0 5px 20px rgba(12,55,37,.045);backdrop-filter:blur(14px);padding:.75rem 0}
+.navbar-blog .navbar-brand{gap:.6rem}
+.navbar-blog .navbar-brand img{height:39px;max-width:48px;object-fit:contain}
+.navbar-blog .navbar-brand span{font-size:1.18rem;letter-spacing:-.03em;color:var(--verde-oscuro)}
+.navbar-blog .nav-link{border-radius:10px;padding:.55rem .9rem!important;color:#3e524b}
+.navbar-blog .nav-link:hover,.navbar-blog .nav-link.active{background:#edf6f0;color:var(--verde-oscuro)}
+.navbar-blog .navbar-toggler{border:1px solid #d5e6da;border-radius:10px}
+.btn,.btn-unsm,.btn-outline-unsm{border-radius:10px;font-weight:600}
+.btn-unsm{background:#116d47;box-shadow:0 5px 14px rgba(17,109,71,.14)}
+.btn-unsm:hover{background:#0d5336}
+.btn-outline-unsm{border-color:#9ab8a6}
+.blog-hero{
+  background:radial-gradient(ellipse at 85% 15%,rgba(215,182,97,.2),transparent 40%),
+             radial-gradient(ellipse at 3% 85%,rgba(79,177,117,.25),transparent 45%),
+             linear-gradient(125deg,#0d3c30,#126545 58%,#0b4b3a);
+  padding:4.1rem 1rem 6.8rem;
+  min-height:390px;
+}
+.blog-hero:before,.blog-hero:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.11);border-radius:50%;pointer-events:none}
+.blog-hero:before{width:420px;height:420px;right:-130px;top:-180px}
+.blog-hero:after{width:280px;height:280px;left:-140px;bottom:-160px}
+.blog-hero .container{position:relative;z-index:1}
+.blog-hero .escudos{gap:1rem;margin-bottom:1.15rem}
+.blog-hero .escudo{height:84px;max-width:92px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.16))}
+.blog-hero h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.3rem,5vw,4rem);font-weight:800;letter-spacing:-.03em;text-shadow:none}
+.blog-hero .facu{font-size:.98rem;color:#edf8f1}
+.blog-hero .lema{font-size:1.55rem;color:#f1d48f}
+.blog-hero .hero-chips{margin-top:1.45rem}
+.hero-chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.21);backdrop-filter:blur(5px);padding:.55rem .95rem;font-size:.8rem}
+.blog-content{margin-top:-3.5rem;border:1px solid #e3ece7;border-radius:22px;box-shadow:0 20px 55px rgba(20,63,44,.1);padding:2rem;background:#fff}
+.section-title{border-bottom:1px solid #e4ece7;padding-bottom:1rem;gap:1rem;margin:2rem 0 1.2rem}
+.section-title .badge-icon{width:49px;height:49px;border-radius:14px;background:#e3f1e9;color:#125b3a;font-size:1.12rem;box-shadow:inset 0 0 0 1px #cce5d7}
+.section-title h2{font-family:'Playfair Display',Georgia,serif;font-size:1.55rem;letter-spacing:-.025em}
+.section-title .sub{font-size:.85rem}
+.week-grid{gap:1rem;align-items:stretch}
+.week-card{border:1px solid #e2ebe5;border-left:1px solid #e2ebe5;border-radius:16px;background:#fff;padding:1.35rem;box-shadow:0 4px 18px rgba(27,70,45,.035);position:relative;overflow:hidden;min-height:185px}
+.week-card:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#14784d,#6fb58b)}
+.week-card:hover{transform:translateY(-4px);border-color:#bbd7c7;box-shadow:0 14px 30px rgba(17,79,47,.1)}
+.week-card .semana-tag{font-size:.73rem;font-weight:800;letter-spacing:.095em;color:#137249;margin-bottom:.7rem}
+.week-card h3{font-size:1.06rem;line-height:1.45;font-weight:750;margin-bottom:.65rem}
+.week-card h3 a{color:#193a2d}
+.week-card p{font-size:.85rem;line-height:1.6;color:#71817a;margin-bottom:1rem}
+.week-card .meta{align-items:flex-start;gap:.5rem;flex-wrap:wrap}
+.week-card .meta .small{font-size:.72rem!important;color:#7a8881!important}
+.week-card.placeholder{background:#fafcfb;border-left:1px solid #e2ebe5}
+.week-card.placeholder:before{background:#d5e0d9}
+.placeholder-title{font-style:normal;color:#60736a}
+.estado{padding:.28rem .7rem;font-size:.72rem;font-weight:700;white-space:nowrap}
+.estado-publicado{background:#e5f5ea;color:#136239}
+.estado-pendiente{background:#eff1ef;color:#626f68}
+.estado-examen{background:#fff3d8;color:#835f16}
+.widget-card{border:1px solid #e4ece7;border-radius:16px;box-shadow:0 5px 19px rgba(20,62,42,.035);margin-bottom:1.2rem}
+.widget-card .widget-title{font-size:.94rem;letter-spacing:.01em;background:#f7faf8;padding:1.05rem 1.15rem;border-bottom:1px solid #e5eee8;color:#194731}
+.widget-card .widget-body{padding:1rem}
+.widget-card li a{border-radius:9px;padding:.6rem .8rem;font-size:.86rem}
+.widget-card li a:hover{background:#e7f4ec}
+.stat-number{font-size:2rem;color:#116c46;letter-spacing:-.055em}
+.stat-label{font-size:.73rem;margin-top:.3rem}
+.post-full .post-head{border-bottom:1px solid #e3ece7;padding-bottom:1.25rem}
+.post-full h1{font-family:'Playfair Display',Georgia,serif;font-weight:750;font-size:clamp(1.65rem,3vw,2.25rem);color:#153d2b}
+.post-body{line-height:1.85;color:#364b41}
+.respaldo{background:#f0f8f2;border:1px solid #c6e3cf;border-radius:15px;padding:1.3rem}
+.respaldo a.btn{white-space:nowrap}
+.comentario{border:1px solid #e1ebe5;border-radius:14px;background:#fff;padding:1.15rem}
+.breadcrumb-unsm{background:#eef6f0;border-radius:10px;padding:.7rem 1rem}
+.editorial{background:white;border:1px solid #e5ede8;border-radius:22px;padding:2.4rem 2.6rem;box-shadow:0 10px 30px rgba(14,66,41,.045);max-width:1000px}
+.editorial h2{font-family:'Playfair Display',Georgia,serif}
+.editorial .lema-big{color:#a78539}
+.blog-footer{background:linear-gradient(135deg,#123b2d,#0b5038);padding:3rem 0 1.4rem;border-top:4px solid #c7a452}
+.blog-footer .footer-title{font-size:1.13rem}
+.blog-footer .copyright{font-size:.79rem}
+.form-control,.form-select{border-color:#d7e4db;border-radius:10px}
+.form-control:focus,.form-select:focus{border-color:#72a783;box-shadow:0 0 0 .2rem rgba(21,126,75,.12)}
+#cuerpo-panel{margin-top:1.5rem}
+#content [role=alert]{border-radius:13px}
+#unidad-1,#unidad-2,#unidad-3{scroll-margin-top:110px}
+@media(min-width:992px){.blog-content>.row>.col-lg-8{padding-right:1.3rem}.blog-content aside{padding-left:1rem}}
+@media(max-width:767px){
+ .navbar-blog .navbar-brand span{font-size:1.02rem}
+ .navbar-blog .navbar-brand img{height:31px;max-width:37px}
+ .blog-hero{padding:3rem .7rem 5rem;min-height:auto}
+ .blog-hero .escudo{height:68px}
+ .blog-hero h1{font-size:2.25rem}
+ .blog-hero .facu{font-size:.84rem}
+ .blog-content{margin-top:-2.3rem;padding:1.2rem;border-radius:18px}
+ .section-title{align-items:flex-start;gap:.75rem}
+ .section-title .badge-icon{width:42px;height:42px;border-radius:12px}
+ .section-title h2{font-size:1.28rem}
+ .week-card{min-height:unset;padding:1.1rem}
+ .editorial{padding:1.6rem 1.2rem;border-radius:16px}
+ .respaldo{align-items:flex-start}
+ .respaldo .adjunto-nombre{max-width:115px}
+ .blog-footer{margin-top:2rem}
+}
+@media(prefers-reduced-motion:reduce){.week-card{transition:none}.week-card:hover{transform:none}}
