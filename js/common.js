@@ -252,8 +252,29 @@ function spinnerHTML() {
 }
 
 async function iniciarComun(callback) {
-  supabase = crearClienteSupabase();
+  try {
+    supabase = crearClienteSupabase();
+  } catch (err) {
+    console.error('Error al iniciar Supabase:', err);
+    const zona = document.getElementById('content') || document.getElementById('contenido-admin');
+    if (zona) zona.textContent = 'No se pudo iniciar la conexión con Supabase. Revisa la configuración del proyecto.';
+    return;
+  }
+
   inyectarModalAuth();
-  await renderNavSesion();
-  if (callback) await callback();
+
+  // Los trabajos públicos no deben depender de que Auth funcione.
+  const tareaContenido = typeof callback === 'function'
+    ? Promise.resolve().then(callback).catch((err) => {
+        console.error('Error al cargar el contenido:', err);
+        const zona = document.getElementById('content') || document.getElementById('contenido-admin');
+        if (zona) zona.textContent = 'No se pudo cargar el contenido: ' + (err.message || String(err));
+      })
+    : Promise.resolve();
+
+  const tareaNavegacion = renderNavSesion().catch((err) => {
+    console.warn('No se pudo comprobar la sesión. El contenido público seguirá cargando:', err);
+  });
+
+  await Promise.all([tareaContenido, tareaNavegacion]);
 }
