@@ -64,13 +64,29 @@ async function cargarInicio() {
   contenedor.innerHTML = spinnerHTML();
 
   try {
-    const [{ data: posts, error: errPosts }, { count: nComentarios, error: errComent }] = await Promise.all([
-      supabase.from('posts').select('*').order('unit').order('week'),
-      supabase.from('comments').select('id', { count: 'exact', head: true })
-    ]);
+    // La lista de trabajos es independiente del contador de comentarios.
+    const { data: posts, error: errPosts } = await supabase
+      .from('posts')
+      .select('*')
+      .order('unit')
+      .order('week');
 
     if (errPosts) throw errPosts;
-    if (errComent && errComent.code !== '42P01' && errComent.code !== 'PGRST205') throw errComent;
+
+    let nComentarios = 0;
+    try {
+      const { count, error: errComent } = await supabase
+        .from('comments')
+        .select('id', { count: 'exact', head: true });
+
+      if (errComent) {
+        console.warn('No se pudo obtener el número de comentarios:', errComent);
+      } else {
+        nComentarios = count || 0;
+      }
+    } catch (errComent) {
+      console.warn('Error al consultar comentarios:', errComent);
+    }
 
     const postsPorUnidad = {};
     (posts || []).forEach((p) => {
