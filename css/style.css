@@ -802,3 +802,18 @@ a{color:#9cafff}a:hover{color:#d2dcff}
 .alert-info-unsm{background:#263854!important;border:1px solid #5068a5!important;color:#d2dfff!important}
 #content [role=alert]{border-radius:14px}
 @media(max-width:767px){.blog-hero{padding:3rem .8rem 5.2rem}.blog-hero h1{font-size:2.5rem!important}.blog-content{padding:1.2rem;margin-top:-2.4rem}.week-card{min-height:0}.navbar-blog .navbar-brand span{font-size:1rem}}
+
+/* FISI Academic Hub: nueva cabecera compacta y editorial */
+.blog-hero{padding:2.9rem 1rem 5.8rem!important;min-height:0!important;text-align:center}
+.blog-hero .escudos{margin-bottom:1.2rem;gap:.65rem}
+.blog-hero .escudo{height:64px!important;max-width:72px!important}
+.blog-hero .hero-eyebrow{display:inline-flex;align-items:center;justify-content:center;margin:0 0 .7rem;padding:.42rem .9rem;border:1px solid rgba(172,189,255,.28);border-radius:100px;background:rgba(130,151,255,.10);font-size:.72rem;font-weight:800;letter-spacing:.12em;color:#c4d0ff}
+.blog-hero h1{font-size:clamp(2.25rem,4.9vw,4.15rem)!important;line-height:1.1;max-width:1000px;margin:0 auto 1.1rem;letter-spacing:-.055em}
+.blog-hero .hero-accent{color:#a5b5ff}
+.blog-hero .facu{font-size:.92rem!important;line-height:1.35;margin:0 auto .22rem!important;color:#c4d0e6!important}
+.blog-hero .lema{margin:1rem 0 1.1rem!important;color:#f4c77e!important;font-size:1rem!important}
+.blog-hero .hero-cta{display:inline-flex;align-items:center;justify-content:center;gap:.2rem;background:#f0f3ff;color:#1c2c57;text-decoration:none;font-weight:800;font-size:.88rem;padding:.7rem 1.25rem;border-radius:12px;box-shadow:0 9px 24px #05091844;transition:transform .2s,background .2s}
+.blog-hero .hero-cta:hover{background:#dce5ff;color:#111b39;transform:translateY(-2px)}
+.blog-hero .hero-chips{margin-top:1.25rem;padding-bottom:0}
+.blog-hero .hero-chip{background:#ffffff0d!important;border:1px solid #ffffff1e!important;border-radius:10px!important;font-size:.77rem;padding:.42rem .75rem}
+@media(max-width:767px){.blog-hero{padding:2.4rem .7rem 4.8rem!important}.blog-hero .escudo{height:52px!important}.blog-hero h1{font-size:clamp(2rem,9vw,2.8rem)!important}.blog-hero .hero-eyebrow{font-size:.63rem}}
