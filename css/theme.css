@@ -45,3 +45,10 @@ html[data-theme="light"] .text-secondary,html[data-theme="dark"] .text-secondary
 html[data-theme="light"] .btn-close{filter:none!important}
 html[data-theme="dark"] .btn-close{filter:invert(1)!important}
 @media(max-width:992px){.theme-toggle{margin:.6rem .15rem!important}}
+
+/* Interactive network background - independent from text and buttons */
+.blog-hero{isolation:isolate;position:relative}
+.blog-hero .hero-particles{position:absolute;inset:0;z-index:0;pointer-events:none;display:block}
+.blog-hero>.container{position:relative;z-index:2}
+.blog-hero::before,.blog-hero::after{pointer-events:none}
+@media(prefers-reduced-motion:reduce){.blog-hero .hero-particles{display:none}}
