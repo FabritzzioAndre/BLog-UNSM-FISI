@@ -713,3 +713,92 @@ a{transition:color .18s ease}
  .blog-footer{margin-top:2rem}
 }
 @media(prefers-reduced-motion:reduce){.week-card{transition:none}.week-card:hover{transform:none}}
+
+
+/* === FISI DIGITAL 2026 — REDISEÑO COMPLETO === */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+:root{--verde:#6478ff;--verde-oscuro:#cbd6ff;--verde-brillante:#8090ff;--verde-claro:#252b43;--dorado:#f1b96d;--hover:#94a9ff;--texto:#eef2ff;--gris:#a5afc7;--borde:#343c55;--azul:#677cff}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#0b1020;color:#e6ebfa;background-image:radial-gradient(ellipse at 100% 0%,#283255 0%,transparent 35%),radial-gradient(ellipse at 0% 52%,#171e34 0%,transparent 38%)}
+h1,h2,h3,h4,.navbar-blog .navbar-brand span,.section-title h2,.blog-footer .footer-title{font-family:'Outfit',sans-serif!important;letter-spacing:-.035em}
+a{color:#9cafff}a:hover{color:#d2dcff}
+.topbar{background:#080c18!important;color:#aab5ce!important;border-bottom:1px solid #253049}.topbar a{color:#c4d0ee}
+.navbar-blog{background:rgba(15,21,38,.96)!important;backdrop-filter:blur(20px);border-bottom:1px solid #303a55;box-shadow:0 12px 30px #0002;padding:.8rem 0}
+.navbar-blog .navbar-brand span{color:#f6f7ff!important;font-weight:800}
+.navbar-blog .nav-link{color:#b8c4db!important;border-radius:10px;transition:.2s}
+.navbar-blog .nav-link:hover,.navbar-blog .nav-link.active{color:white!important;background:#293553!important}
+.navbar-toggler{background:#dbe2f2;border:0}
+.btn-unsm{background:#6277fa!important;border:1px solid #8092ff!important;color:white!important;box-shadow:0 8px 24px #5268ff30}
+.btn-unsm:hover{background:#4359df!important}
+.btn-outline-unsm{border-color:#7384b9!important;color:#d5dcfc!important;background:#222d4b!important}
+.btn-outline-unsm:hover{background:#6076eb!important;color:#fff!important}
+.btn-dorado{background:#dca95a;color:#101725}
+.blog-hero{background:radial-gradient(circle at 82% 25%,#4055a978,transparent 33%),radial-gradient(circle at 15% 90%,#8d67be30,transparent 35%),linear-gradient(125deg,#11182e,#1d2c52 60%,#151b37)!important;border-bottom:1px solid #46598b;padding:4.2rem 1rem 6.8rem;min-height:400px}
+.blog-hero::before{width:520px;height:520px;right:-120px;top:-220px;border:1px solid #ffffff1d}
+.blog-hero::after{width:400px;height:400px;left:-240px;bottom:-240px;border:1px solid #ffffff1c}
+.blog-hero h1{font-family:'Outfit',sans-serif!important;font-size:clamp(2.9rem,5vw,4.5rem)!important;font-weight:800;text-shadow:none;letter-spacing:-.055em}
+.blog-hero .facu{color:#d9e1f4!important;opacity:1}
+.blog-hero .lema{color:#f6c881!important;font-family:'Outfit',sans-serif!important;font-size:1rem!important;font-weight:600;letter-spacing:.03em}
+.blog-hero .escudo{height:83px;filter:drop-shadow(0 8px 17px #0006)}
+.hero-chip{background:#ffffff13!important;border:1px solid #ffffff35!important;border-radius:12px!important;text-shadow:none;color:#e5ebff}
+.blog-content{background:#111a2c!important;border:1px solid #344360!important;border-radius:22px;box-shadow:0 25px 70px #0509149c!important;margin-top:-3.3rem}
+.section-title{border-bottom:1px solid #35425b}
+.section-title .badge-icon{border:1px solid #5065a1!important;background:#263a67!important;color:#dce5ff!important;border-radius:13px}
+.section-title h2{color:#f4f5ff!important;font-size:1.55rem}
+.section-title .sub{color:#9daec7!important}
+.week-grid{gap:1rem}
+.week-card{background:#1a263d!important;border:1px solid #354663!important;border-left:1px solid #354663!important;border-radius:17px;min-height:195px;box-shadow:0 10px 24px #04091724;transition:.2s ease}
+.week-card:before{background:linear-gradient(90deg,#677cff,#ad87fa)!important;height:3px}
+.week-card:hover{transform:translateY(-5px);border-color:#7187e9!important;box-shadow:0 20px 35px #04081288}
+.week-card .semana-tag{color:#a7b7ff!important}
+.week-card h3,.week-card h3 a{color:#f3f6ff!important;font-weight:700}
+.week-card p{color:#b2bed3!important}
+.week-card .meta .small{color:#99a7c3!important}
+.week-card.placeholder{background:#151e30!important}
+.week-card.placeholder:before{background:#49546c!important}
+.placeholder-title{color:#b4bed4!important}
+.estado{border-radius:9px;padding:.32rem .65rem}
+.estado-publicado{background:#283d71!important;color:#c4d3ff!important}
+.estado-pendiente{background:#303a4d!important;color:#b4bfd0!important}
+.estado-examen{background:#54402e!important;color:#ffdda2!important}
+.widget-card{background:#19253a!important;border:1px solid #34435c!important;border-radius:16px;box-shadow:0 10px 22px #050a1828}
+.widget-card .widget-title{background:#202d47!important;color:#e6ebff!important;border-bottom:1px solid #384764;padding:1rem 1.1rem}
+.widget-card .widget-body{color:#cbd5e9}
+.widget-card li a{color:#c4cfdf!important;border-radius:9px}
+.widget-card li a:hover{background:#2a3a5b!important;color:#fff!important}
+.widget-card .text-success{color:#a4b8ff!important}
+.widget-card .text-secondary{color:#aebbd1!important}
+.stat-number{color:#a7b9ff!important}
+.stat-label{color:#a4b3c9!important}
+.post-full h1{color:#f4f6ff!important}
+.post-full .post-head{border-bottom-color:#374864}
+.post-full .post-meta{color:#aebdd5}
+.post-body{color:#d8e1ee!important}
+.post-body a{color:#a3b4ff}
+.respaldo{background:#233450!important;border:1px solid #5269a0!important;color:#eef1fa;border-radius:14px}
+.respaldo .text-success{color:#a6baff!important}
+.comentario{background:#1c2940!important;border:1px solid #354863!important;color:#e0e9ff}
+.comentario .autor{color:#f4f6ff}
+.comentario .fecha{color:#a8b6ce}
+.comentario .avatar{background:#5669cc}
+.breadcrumb-unsm{background:#273753!important;color:#cdd8eb!important}
+.breadcrumb-unsm a{color:#a9bcff}
+.editorial{background:#18233a!important;border:1px solid #344664!important;border-radius:22px;box-shadow:0 12px 32px #06091544;color:#e8edfa}
+.editorial h2{color:#f1f4ff!important}
+.editorial .text-secondary{color:#b9c6d7!important}
+.editorial .lema-big{font-family:'Outfit',sans-serif!important;color:#e6b779!important;font-size:1.2rem}
+.blog-footer{background:#080d1b!important;border-top:3px solid #6478ed;color:#c9d3e6}
+.blog-footer .footer-title{color:#fff}
+.blog-footer a{color:#abbcff}
+.blog-footer .copyright{color:#a4b0c8}
+.form-control,.form-select{background:#1b2940;color:#e9eeff;border:1px solid #3d5070;border-radius:10px}
+.form-control:focus,.form-select:focus{background:#24334f;color:#fff;border-color:#8194ff;box-shadow:0 0 0 .2rem #637aff33}
+.form-control::placeholder{color:#9daac1}
+.form-label,.form-check-label,.table{color:#dce6f5}
+.table{--bs-table-color:#e2e8f4;--bs-table-bg:#19253a;--bs-table-border-color:#354560;--bs-table-hover-color:white;--bs-table-hover-bg:#2a3851}
+.modal-content{background:#1a263c;color:#eaf0ff;border:1px solid #42536c}
+.modal-header.bg-success{background:#465ce0!important}
+.btn-close{filter:invert(1)}
+.alert-info-unsm{background:#263854!important;border:1px solid #5068a5!important;color:#d2dfff!important}
+#content [role=alert]{border-radius:14px}
+@media(max-width:767px){.blog-hero{padding:3rem .8rem 5.2rem}.blog-hero h1{font-size:2.5rem!important}.blog-content{padding:1.2rem;margin-top:-2.4rem}.week-card{min-height:0}.navbar-blog .navbar-brand span{font-size:1rem}}
